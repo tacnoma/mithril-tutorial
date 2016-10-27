@@ -1,0 +1,19 @@
+<!doctype html>
+<title>Routingアプリケーション</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mithril/0.2.5/mithril.min.js"></script>
+<script>
+var dashboard = {
+  controller: function() {
+    return {id: m.route.param("userID")};
+  },
+  view: function(controller) {
+    return m("div", controller.id);
+  }
+}
+
+m.route.mode = "pathname";
+
+m.route(document, "/dashboard/test", {
+  "/dashboard/:userID": dashboard
+});
+</script>
