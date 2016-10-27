@@ -1,0 +1,62 @@
+<!doctype html>
+<title>ToDoアプリケーション</title>
+<script src="/Users/chihiro.tachinami/node_modules/mithril/mithril.min.js"></script>
+<script>
+var todo = {};
+
+//Todoクラスはプロパティを2つ持つ
+todo.Todo = function(data){
+  this.description = m.prop(data.description);
+  this.done = m.prop(false);
+};
+todo.TodoList = Array;
+
+var myTask = new todo.Todo({description: "チュートリアル"});
+myTask.description();
+
+var isDone = myTask.done();
+
+myTask.done(true);
+
+isDone = myTask.done();
+
+var list = new todo.TodoList();
+list.length;
+
+todo.vm = {
+  init: function() {
+    todo.vm.list = new todo.TodoList();
+    todo.vm.description = m.prop('');
+    todo.vm.add = function(description){
+      if(description()) {
+        todo.vm.list.push(new todo.Todo({description: description()}));
+        todo.vm.description("");
+      }
+    };
+  }
+};
+
+todo.controller = function() {
+  todo.vm.init()
+}
+
+todo.view = function() {
+  return m("html", [
+      m("body", [
+        m("input", {value: todo.vm.description()}),
+        m("button", "追加"),
+        m("table", [
+          m("tr", [
+            m("td", [
+              m("input[type=checkbox]")
+            ]),
+            m("td", "タスクの説明"),
+          ])
+        ])
+      ])
+  ]);
+};
+
+m.render(document, todo.view());
+
+</script>
